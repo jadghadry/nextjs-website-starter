@@ -15,6 +15,7 @@ export type FlexContainerProps = {
     centered?: boolean | undefined;
     flexDirection?: "column" | "row" | undefined;
     flexWrap?: "nowrap" | "wrap" | "wrap-reverse" | undefined;
+    gap?: string | undefined;
     justifyContent?:
         | "flex-start"
         | "flex-end"
@@ -23,22 +24,15 @@ export type FlexContainerProps = {
         | "space-around"
         | "space-evenly"
         | undefined;
-    spacing?: string | undefined;
 };
 
 export const FlexContainer = styled.div<FlexContainerProps>`
     align-items: ${(props) => (props.centered ? "center" : props.alignItems)};
     display: flex;
     justify-content: ${(props) => (props.centered ? "center" : props.justifyContent)};
-    flex-direction: ${(props) => props.flexDirection};
-    flex-wrap: ${(props) => props.flexWrap};
-
-    > * {
-        &:not(:last-child) {
-            ${({ flexDirection, spacing }) => flexDirection === "row" && `margin-right: ${spacing};`};
-            ${({ flexDirection, spacing }) => flexDirection === "column" && `margin-bottom: ${spacing};`};
-        }
-    }
+    ${(props) => props.flexDirection && `flex-direction: ${props.flexDirection};`}
+    ${(props) => props.flexWrap && `flex-wrap: ${props.flexWrap};`}
+    ${(props) => props.gap && `gap: ${props.gap};`}
 `;
 
 FlexContainer.defaultProps = {
@@ -47,6 +41,6 @@ FlexContainer.defaultProps = {
     centered: false,
     flexDirection: "row",
     flexWrap: "nowrap",
+    gap: undefined,
     justifyContent: "flex-start",
-    spacing: undefined,
 };
